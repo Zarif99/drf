@@ -1,6 +1,12 @@
 from rest_framework import serializers
 
-from restapi.models import Article
+from restapi.models import Article, User
+
+
+class UserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        include = '__all__'
 
 
 class ArticleSerializer(serializers.ModelSerializer):

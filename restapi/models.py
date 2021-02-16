@@ -1,4 +1,24 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
+
+
+class User(AbstractUser):
+    first_name = models.CharField(('first name'), max_length=150)
+    last_name = models.CharField(('last name'), max_length=150)
+    email = models.EmailField(('email address'), max_length=60, unique=True)
+    image = models.ImageField(('photo'), blank=True)
+
+    REQUIRED_FIELDS = ['first_name', 'last_name', 'email']
+
+    def __str__(self):
+        """
+        Return the username of user
+        """
+        return self.get_username()
+
+    class Meta:
+        verbose_name = ('user')
+        verbose_name_plural = ('users')
 
 
 class Article(models.Model):
