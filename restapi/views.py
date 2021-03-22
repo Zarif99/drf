@@ -1,7 +1,7 @@
 from rest_framework import status
 from rest_framework.authentication import BasicAuthentication, SessionAuthentication
 from rest_framework.generics import get_object_or_404
-from rest_framework.permissions import IsAuthenticated, IsAdminUser
+from rest_framework.permissions import IsAdminUser, AllowAny
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -12,7 +12,7 @@ authentication_classes = [SessionAuthentication, BasicAuthentication]
 
 
 class ArticleList(APIView):
-    permission_classes = [IsAuthenticated]
+    permission_classes = [AllowAny]
 
     def get(self, request):
         articles = Article.objects.filter(draft=False)
@@ -39,6 +39,7 @@ class ArticleDetail(APIView):
     def get(self, request, pk):
         article = get_object_or_404(Article, draft=False, pk=pk)
         serializer = ArticleSerializer(article)
+
         return Response(serializer.data)
 
     def put(self, request, pk):
